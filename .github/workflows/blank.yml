@@ -25,6 +25,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
+      - name: Install rsync
+        run: sudo apt install rsync
+
       - name: Copy files to server
-        run: rsync -P $GITHUB_WORKSPACE/index.html ${{ secrets.ssh_user }}@${{ secrets.ssh_ip }}:/
+        run: rsync -P --password-file=<(echo "${{ secrets.ssh_pw }}") $GITHUB_WORKSPACE/index.html ${{ secrets.ssh_user }}@${{ secrets.ssh_ip }}:/${{ secrets.ssh_folder }}
