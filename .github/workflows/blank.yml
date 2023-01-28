@@ -29,6 +29,6 @@ jobs:
         run: sudo apt install rsync sshpass
       
       - name: Copy files to server
-        run: rsync -azP --rsh="/usr/bin/sshpass -p ${{ secrets.ssh_pw }} ssh -o StrictHostKeyChecking=no -l ${{ secrets.ssh_user }}" $GITHUB_WORKSPACE/ /
+        run: rsync -azP --rsh="/usr/bin/sshpass -p ${{ secrets.ssh_pw }} ssh -o StrictHostKeyChecking=no -l ${{ secrets.ssh_user }}" $GITHUB_WORKSPACE/index.html /home/myflcuq/stefanaltheimer/siedle
 
       
