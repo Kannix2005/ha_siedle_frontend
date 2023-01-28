@@ -25,8 +25,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: Install rsync
-        run: sudo apt install rsync
-
+      - name: Install deps
+        run: sudo apt install rsync sshpass
+      
       - name: Copy files to server
-        run: rsync -P --password-file=<(echo "${{ secrets.ssh_pw }}") $GITHUB_WORKSPACE/index.html ${{ secrets.ssh_user }}@${{ secrets.ssh_ip }}:/${{ secrets.ssh_folder }}
+        run: rsync -ratlzP--rsh="/usr/bin/sshpass -p ${{ secrets.ssh_pw }} ssh -o StrictHostKeyChecking=no -l ${{ secrets.ssh_user }}" $GITHUB_WORKSPACE/ /${{ secrets.ssh_folder }}
+
+      
