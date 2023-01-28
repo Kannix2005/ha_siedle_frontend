@@ -30,16 +30,18 @@ docReady(function() {
         "qr-reader", { fps: 10, qrbox: 250 });
     
     function onScanSuccess(decodedText, decodedResult) {
-        if (decodedText !== lastResult) {
-            ++countResults;
-            lastResult = decodedText;
+        //if (decodedText !== lastResult) {
+            //++countResults;
+            //lastResult = decodedText;
             console.log(`Scan result = ${decodedText}`, decodedResult);
  
-            resultContainer.innerHTML += `<div>[${countResults}] - ${decodedText}</div>`;
+            window.location.href = callback_url + "?config_flow_id=" + config_flow_id + "?result=" + decodedText;
+
+            //resultContainer.innerHTML += `<div>[${countResults}] - ${decodedText}</div>`;
             
             // Optional: To close the QR code scannign after the result is found
-            html5QrcodeScanner.clear();
-        }
+            //html5QrcodeScanner.clear();
+        //}
     }
     
     // Optional callback for error, can be ignored.
@@ -50,5 +52,26 @@ docReady(function() {
     
     html5QrcodeScanner.render(onScanSuccess, onScanError);
 });
+
+function getQueryStrings() { 
+  var assoc  = {};
+  var decode = function (s) { return decodeURIComponent(s.replace(/\+/g, " ")); };
+  var queryString = location.search.substring(1); 
+  var keyValues = queryString.split('&'); 
+
+  for(var i in keyValues) { 
+    var key = keyValues[i].split('=');
+    if (key.length > 1) {
+      assoc[decode(key[0])] = decode(key[1]);
+    }
+  } 
+
+  return assoc; 
+} 
+
+var qs = getQueryStrings();
+var config_flow_id = qs["config_flow_id"]; 
+var callback_url = qs["callback_url"]; 
+
 </script>
 </html> 
