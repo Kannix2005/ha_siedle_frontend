@@ -35,7 +35,7 @@ docReady(function() {
             //lastResult = decodedText;
             console.log(`Scan result = ${decodedText}`, decodedResult);
  
-            window.location.href = callback_url + "?config_flow_id=" + config_flow_id + "?result=" + decodedText;
+            window.location.href = callback_url + "?config_flow_id=" + config_flow_id + "?result=" + encodeURIComponent(decodedText);
 
             //resultContainer.innerHTML += `<div>[${countResults}] - ${decodedText}</div>`;
             
